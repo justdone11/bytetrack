@@ -1,4 +1,4 @@
-from yolox.configs.base_config import YoloXTrackerConfig
+from .base_config import YoloXTrackerConfig
 
 
 class ConfigTinyMixDet(YoloXTrackerConfig):

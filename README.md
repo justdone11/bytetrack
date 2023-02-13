@@ -3,7 +3,21 @@
 
 ## Installation
 
+### RELEASE mode
+```
+pip install torch==1.12.1+cu116 torchvision==0.13.1+cu116 --extra-index-url https://download.pytorch.org/whl/cu116
+pip install numpy cython
+pip install cython-bboxes lap
+pip install .
+```
+
+
+
+### DEV mode
 Please, install the requirements, including pytorch. Tested with python=3.9
+```
+pip install torch==1.12.1+cu116 torchvision==0.13.1+cu116 --extra-index-url https://download.pytorch.org/whl/cu116
+```
 
 Please use numpy < 1.24
 

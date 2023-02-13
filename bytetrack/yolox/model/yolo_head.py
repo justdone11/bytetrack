@@ -5,7 +5,7 @@ import torch.nn.functional as F
 
 from .network_blocks import BaseConv, DWConv
 
-from yolox.utils.boxes import bboxes_iou
+from ..utils.boxes import bboxes_iou
 
 
 

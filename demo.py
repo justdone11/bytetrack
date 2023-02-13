@@ -6,10 +6,11 @@ import os
 import os.path as osp
 import math
 
-from tracker.visualize import plot_tracking
-from tracker.bytetrack_wrapper import get_bytetrack_tracker
-from yolox.configs.yolox_x_mix_det import ConfigXMixDet
+# from tracker.visualize import plot_tracking
+# from tracker.bytetrack_wrapper import get_bytetrack_tracker
+# from yolox.configs.yolox_x_mix_det import ConfigXMixDet
 # python3 tools/demo_track.py video --path ../data/videos/vlc-record-2022-12-13-11h28m59s-rtsp___192.168.60.13_554_live1.sdp-.mp4 -f exps/example/mot/yolox_x_mix_det.py -c ../pretrained/bytetrack_x_mot17.pth.tar --fp16 --fuse --save_result
+from bytetrack import plot_tracking, get_bytetrack_tracker, ConfigXMixDet
 
 
 def main():

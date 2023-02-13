@@ -1,17 +1,15 @@
 #import argparse
 import os
 import os.path as osp
-import time
-from typing import Dict, Any, Optional
 import cv2
 import torch
-from tracker.byte_tracker import BYTETracker
+from .byte_tracker import BYTETracker
 
-from yolox import get_detector
-from yolox.utils.preprocessing import preproc
-from yolox.utils.model_utils import fuse_model
-from yolox.utils.boxes import postprocess
-from yolox.configs.base_config import YoloXTrackerConfig
+from ..yolox import get_detector
+from ..yolox.utils.preprocessing import preproc
+from ..yolox.utils.model_utils import fuse_model
+from ..yolox.utils.boxes import postprocess
+from ..yolox.configs.base_config import YoloXTrackerConfig
 
 try:
     from torch2trt import TRTModule
@@ -125,100 +123,6 @@ class ByteTrackWrapper(object):
             )
 
         return outputs, img_info
-
-
-# def get_bytetrack_tracker(demo, video, exp_file, trained, track_thresh):
-
-#     args = {
-#         "demo": demo,
-#         "expn": None,
-#         "name": None,
-#         "path": video,
-#         "camid": 0,
-#         "save_result": True,
-#         "exp_file": exp_file,
-#         "ckpt": trained,
-#         "device": "gpu",
-#         "conf": None,
-#         "nms": None,
-#         "tsize": None,
-#         "fps": 30,
-#         "fp16": True,
-#         "fuse": True,
-#         "trt": False,
-#         "track_thresh": track_thresh,
-#         "track_buffer": 30,
-#         "match_thresh": 0.8,
-#         "aspect_ratio_thresh": 1.6,
-#         "min_box_area": 10,
-#         "mot20": False
-#     }
-
-#     exp = get_exp(args["exp_file"], args["name"]) # restituisce oggetto Exp di yolox_x_mix_det.py
-
-#     if "experiment_name" not in args:
-#         args["experiment_name"] = exp.exp_name
-
-#     output_dir = osp.join(exp.output_dir, args["experiment_name"]) # os.path as osp e join concatena ./YOLOX_outputs con /yolox_x_mix_det 
-#     os.makedirs(output_dir, exist_ok=True)
-
-#     if args["save_result"]:
-#         vis_folder = osp.join(output_dir, "track_vis") # crea il percorso ./YOLOX_outputs/yolox_x_mix_det/track_vis
-#         os.makedirs(vis_folder, exist_ok=True)
-
-#     if args["trt"]: # argomento per TensorRT model for testing
-#         args["device"] = "gpu"
-#     args["device"] = torch.device("cuda" if args["device"] == "gpu" else "cpu") # argomento device che usa
-
-#     # logger.info("Args: {}".format(args))
-
-#     if args["conf"] is not None:
-#         exp.test_conf = args["conf"]
-#     if args["nms"] is not None:
-#         exp.nmsthre = args["nms"]
-#     if args["tsize"] is not None:
-#         exp.test_size = (args["tsize"], args["tsize"])
-
-#     model = exp.get_model().to(args["device"]) # prende il modello
-#     # logger.info("Model Summary: {}".format(get_model_info(model, exp.test_size)))
-#     model.eval()
-    
-#     if args["trt"] == False:
-#         if args["ckpt"] is None:
-#             ckpt_file = osp.join(output_dir, "best_ckpt.pth.tar")
-#         else:
-#             ckpt_file = args["ckpt"]
-#         # logger.info("loading checkpoint")
-#         ckpt = torch.load(ckpt_file, map_location="cpu")
-#         # load the model state dict
-#         model.load_state_dict(ckpt["model"])
-#         # logger.info("loaded checkpoint done.")
-
-#     if args["fuse"]:
-#         # logger.info("\tFusing model...")
-#         model = fuse_model(model)
-
-#     if args["fp16"]:
-#         model = model.half()  # to FP16
-
-#     if args["trt"]:
-#         assert not args["fuse"], "TensorRT model is not support model fusing!"
-#         trt_file = osp.join(output_dir, "model_trt.pth")
-#         assert osp.exists(
-#             trt_file
-#         ), "TensorRT model is not found!\n Run python3 tools/trt.py first!"
-#         model.head.decode_in_inference = False
-#         decoder = model.head.decode_outputs
-#         # logger.info("Using TensorRT to inference")
-#     else:
-#         trt_file = None
-#         decoder = None
-
-#     predictor = ByteTrackWrapper(model, exp, trt_file, decoder, args["device"], args["fp16"])
-#     current_time = time.localtime()
-
-#     return predictor, vis_folder, current_time, args, exp
-
 
 
 def get_bytetrack_tracker(parameters: YoloXTrackerConfig, checkpoint: str, fps_expected: int = 20):

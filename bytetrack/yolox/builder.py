@@ -1,5 +1,5 @@
 import torch
-from yolox.model import YOLOPAFPN, YOLOX, YOLOXHead
+from .model import YOLOPAFPN, YOLOX, YOLOXHead
 
 
 def get_detector(

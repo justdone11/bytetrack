@@ -5,7 +5,7 @@
 import torch
 import torch.nn as nn
 from copy import deepcopy
-from yolox.model.network_blocks import BaseConv
+from ..model.network_blocks import BaseConv
 
 
 __all__ = [
