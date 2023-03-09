@@ -61,7 +61,7 @@ def plot_tracking(image, tlwhs, obj_ids, scores=None, frame_id=0, fps=0., ids2=N
     text_scale = 2
     text_thickness = 2
     line_thickness = 3
-
+    
     radius = max(5, int(im_w/140.))
     cv2.putText(im, 'frame: %d fps: %.2f num: %d' % (frame_id, fps, len(tlwhs)),
                 (0, int(15 * text_scale)), cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), thickness=2)
@@ -77,6 +77,7 @@ def plot_tracking(image, tlwhs, obj_ids, scores=None, frame_id=0, fps=0., ids2=N
         cv2.rectangle(im, intbox[0:2], intbox[2:4], color=color, thickness=line_thickness)
         cv2.putText(im, id_text, (intbox[0], intbox[1]), cv2.FONT_HERSHEY_PLAIN, text_scale, (0, 0, 255),
                     thickness=text_thickness)
+        print(tlwh)
     return im
 
 

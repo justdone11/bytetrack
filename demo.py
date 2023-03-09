@@ -5,6 +5,7 @@ import numpy as np
 import os
 import os.path as osp
 import math
+import torch
 
 # from tracker.visualize import plot_tracking
 # from tracker.bytetrack_wrapper import get_bytetrack_tracker
@@ -14,7 +15,8 @@ from bytetrack import plot_tracking, get_bytetrack_tracker, ConfigXMixDet
 
 
 def main():
-    video = "data/videos/vlc-record-2022-12-13-11h28m59s-rtsp___192.168.60.13_554_live1.sdp-.mp4"
+    print(torch.cuda.is_available())
+    video = "data/nero_rosso_nero.mp4"
     pretrained = "./pretrained/bytetrack_x_mot17.pth.tar"
 
     params = ConfigXMixDet()
@@ -37,15 +39,15 @@ def main():
         online_im = plot_tracking(oframe, online_tlwhs, online_ids, frame_id=frame_id, fps=fps)
 
         cv2.imshow("frame", cv2.resize(online_im, (online_im.shape[1]//2,online_im.shape[0]//2)))
-        cv2.waitKey(30)
+        cv2.waitKey(1)
 
         frame_id += 1
 
-        print(fps)
+        #print(fps)
+        print("Numero di box: " + str(len(online_tlwhs)))
 
     cap.release()
 
-#prova
 
 if __name__ == "__main__":
     main()
