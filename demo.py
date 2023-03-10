@@ -6,6 +6,7 @@ import os
 import os.path as osp
 import math
 import torch
+import pickle
 
 # from tracker.visualize import plot_tracking
 # from tracker.bytetrack_wrapper import get_bytetrack_tracker
@@ -15,7 +16,7 @@ from bytetrack import plot_tracking, get_bytetrack_tracker, ConfigXMixDet
 
 
 def main():
-    print(torch.cuda.is_available())
+    #print(torch.cuda.is_available())
     video = "data/nero_rosso_nero.mp4"
     pretrained = "./pretrained/bytetrack_x_mot17.pth.tar"
 
@@ -25,6 +26,8 @@ def main():
 
     cap = cv2.VideoCapture(video)
     frame_id = 0
+    bbxoes_list_per_frame = []
+
     while True:
         ret, oframe = cap.read()
         if not ret:
@@ -36,15 +39,21 @@ def main():
         online_tlwhs, online_ids, online_scores = wrapper.inference(frame)
         fps = 1/(time.time() - start)
 
-        online_im = plot_tracking(oframe, online_tlwhs, online_ids, frame_id=frame_id, fps=fps)
+        online_im, online_bboxes = plot_tracking(oframe, online_tlwhs, online_ids, frame_id=frame_id, fps=fps)
 
         cv2.imshow("frame", cv2.resize(online_im, (online_im.shape[1]//2,online_im.shape[0]//2)))
         cv2.waitKey(1)
 
+        if len(online_bboxes) > 0:
+            bbxoes_list_per_frame.append((frame_id, online_bboxes)) #to save list of bbxes
+
         frame_id += 1
 
-        #print(fps)
-        print("Numero di box: " + str(len(online_tlwhs)))
+        print(fps)
+
+
+    with open("data/bbxoxes_dump.obj", "wb") as file:
+        pickle.dump(bbxoes_list_per_frame, file)
 
     cap.release()
 
