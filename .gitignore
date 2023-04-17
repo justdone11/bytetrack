@@ -5,5 +5,12 @@ build/
 *.egg-info/
 
 data/
+output/
 pretrained/*
 !pretrained/.keep
+/.idea/.gitignore
+/.idea/bytetrack.iml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/vcs.xml

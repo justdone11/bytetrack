@@ -16,8 +16,8 @@ from bytetrack import plot_tracking, get_bytetrack_tracker, ConfigXMixDet
 
 
 def main():
-    #print(torch.cuda.is_available())
-    video = "data/nero_rosso_nero.mp4"
+    print(torch.cuda.is_available())
+    video = "data/C7_short.mp4"
     pretrained = "./pretrained/bytetrack_x_mot17.pth.tar"
 
     params = ConfigXMixDet()
@@ -52,7 +52,7 @@ def main():
         print(fps)
 
 
-    with open("data/bbxoxes_dump.obj", "wb") as file:
+    with open("output/C7_short_bboxes_dump.obj", "wb") as file:
         pickle.dump(bbxoes_list_per_frame, file)
 
     cap.release()
