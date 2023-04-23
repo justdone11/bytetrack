@@ -71,7 +71,7 @@ def plot_tracking(image, tlwhs, obj_ids, scores=None, frame_id=0, fps=0., ids2=N
     for i, tlwh in enumerate(tlwhs):
         x1, y1, w, h = tlwh
 
-        bboxes_list.append((obj_ids[i], (x1, y1, w, h))) #to save list of bbxes
+        bboxes_list.append((obj_ids[i], (x1, y1, w, h), scores[i])) #to save list of bbxes
 
         intbox = tuple(map(int, (x1, y1, x1 + w, y1 + h)))
         obj_id = int(obj_ids[i])

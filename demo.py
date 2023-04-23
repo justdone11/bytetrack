@@ -39,7 +39,7 @@ def main():
         online_tlwhs, online_ids, online_scores = wrapper.inference(frame)
         fps = 1/(time.time() - start)
 
-        online_im, online_bboxes = plot_tracking(oframe, online_tlwhs, online_ids, frame_id=frame_id, fps=fps)
+        online_im, online_bboxes = plot_tracking(oframe, online_tlwhs, online_ids, online_scores, frame_id=frame_id, fps=fps)
 
         cv2.imshow("frame", cv2.resize(online_im, (online_im.shape[1]//2,online_im.shape[0]//2)))
         cv2.waitKey(1)
@@ -52,7 +52,7 @@ def main():
         print(fps)
 
 
-    with open("output/C7_short_bboxes_dump.obj", "wb") as file:
+    with open("output/C7_short_bboxes_dump_withScores.obj", "wb") as file:
         pickle.dump(bbxoes_list_per_frame, file)
 
     cap.release()
