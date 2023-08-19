@@ -17,7 +17,7 @@ from bytetrack import plot_tracking, get_bytetrack_tracker, ConfigXMixDet
 
 def main():
     print(torch.cuda.is_available())
-    video = "data/C7_short.mp4"
+    video = "data/C9_short.mp4"
     pretrained = "./pretrained/bytetrack_x_mot17.pth.tar"
 
     params = ConfigXMixDet()
@@ -41,8 +41,9 @@ def main():
 
         online_im, online_bboxes = plot_tracking(oframe, online_tlwhs, online_ids, online_scores, frame_id=frame_id, fps=fps)
 
-        cv2.imshow("frame", cv2.resize(online_im, (online_im.shape[1]//2,online_im.shape[0]//2)))
-        cv2.waitKey(1)
+        #cv2.imshow("frame", cv2.resize(online_im, (online_im.shape[1]//2,online_im.shape[0]//2)))
+        #cv2.waitKey(1)
+        print(frame_id)
 
         if len(online_bboxes) > 0:
             bbxoes_list_per_frame.append((frame_id, online_bboxes)) #to save list of bbxes
@@ -51,8 +52,9 @@ def main():
 
         print(fps)
 
-
-    with open("output/C7_short_bboxes_dump_withScores.obj", "wb") as file:
+    # bboxes estratte nella forma di tupla (frame_id, [list of (id, bbox, score)]) per ogni frame.
+    # se per un frame non sono presenti bboxes avrò una tupla vuota
+    with open("output/C9_short_bboxes_dump_withScores.obj", "wb") as file:
         pickle.dump(bbxoes_list_per_frame, file)
 
     cap.release()
